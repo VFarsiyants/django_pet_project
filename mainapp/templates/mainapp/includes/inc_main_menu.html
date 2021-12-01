@@ -13,3 +13,9 @@
         {% endif %}
 </ul>
 <a href="#" class="search"></a>
+{% if item_qty %}
+<a href="{% url 'basket:basket' %}" class="basket">
+    <span>{{ item_qty }} шт.</span>
+    <span>{{ total }} &#x20bd</span>
+</a>
+{% endif %}

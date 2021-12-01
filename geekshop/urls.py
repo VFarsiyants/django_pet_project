@@ -24,7 +24,7 @@ urlpatterns = [
     path('products/', include('mainapp.urls', namespace='products')),
     path('contact/', mainapp.contact, name='contact'),
     path('auth/', include('authapp.urls', namespace='authapp')),
-
+    path('basket/', include('basketapp.urls', namespace='basket')),
     path('admin/', admin.site.urls),
 ]
 
