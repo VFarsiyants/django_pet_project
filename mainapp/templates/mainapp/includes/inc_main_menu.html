@@ -1,11 +1,15 @@
 <a href="{% url 'index' %}" class="logo"></a>
 <ul class="menu">
-    <li><a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">домой</a></li>
-    <li><a href="{% url 'products:products' %}" class="{% if request.resolver_match.namespace == 'products' %}active{% endif %}">продукты</a></li>
-    <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">контакты</a></li>
+    <li><a href="{% url 'index' %}"
+           class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">домой</a></li>
+    <li><a href="{% url 'products:products' %}"
+           class="{% if request.resolver_match.namespace == 'products' %}active{% endif %}">продукты</a></li>
+    <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">контакты</a>
+    </li>
     <li>
         {% if user.is_authenticated %}
-            <li><a href="{% url 'authapp:edit' %}">{% if user.first_name %}{{ user.first_name }}{% else %}Пользователь{% endif %}</a></li>
+            <li><a href="{% url 'authapp:edit' %}">
+                {% if user.first_name %}{{ user.first_name }}{% else %}Пользователь{% endif %}</a></li>
             <li><a href="{% url 'authapp:logout' %}">Выйти</a></li>
         {% else %}
             <li><a href="{% url 'authapp:register' %}">Регистрация</a></li>
@@ -13,9 +17,9 @@
         {% endif %}
 </ul>
 <a href="#" class="search"></a>
-{% if item_qty %}
-<a href="{% url 'basket:basket' %}" class="basket">
-    <span>{{ item_qty }} шт.</span>
-    <span>{{ total }} &#x20bd</span>
-</a>
+{% if basket %}
+    <a href="{% url 'basket:basket' %}" class="basket">
+        <span>{{ basket.0.total_cost|floatformat:2 }} руб. <br>
+              ({{ basket.0.total_quantity }} шт.)</span>
+    </a>
 {% endif %}

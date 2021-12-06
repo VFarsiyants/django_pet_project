@@ -4,37 +4,23 @@ import json
 
 from basketapp.models import Basket
 from mainapp.models import Product, ProductCategory
+from services import get_basket, get_hot_product, get_same_products
 
 
 def index(request):
-    # duplicated code
-    items_qty = None
-    total = None
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-        if basket:
-            items_qty = sum(basket.values_list('quantity', flat=True))
-            total = sum([item.product.price * item.quantity for item in basket])
-    # duplicated code
     products_list = Product.objects.all()[:4]
     context = {
         'title': 'Мой магазин',
         'products': products_list,
-        'item_qty': items_qty,
-        'total': total
+        'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/index.html', context=context)
 
 
 def products(request, pk=None):
     links_products_menu = ProductCategory.objects.all()
-    items_qty = None
-    total = None
-    if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
-        if basket:
-            items_qty = sum(basket.values_list('quantity', flat=True))
-            total = sum([item.product.price * item.quantity for item in basket])
+    hot_product = get_hot_product()
+
     if pk is not None:
         if pk == 0:
             products_list = Product.objects.all()
@@ -46,17 +32,15 @@ def products(request, pk=None):
             'links_products_menu': links_products_menu,
             'products': products_list,
             'category': category_item,
-            'item_qty': items_qty,
-            'total': total
+            'basket': get_basket(request.user)
         }
         return render(request, 'mainapp/products_list.html', context)
     context = {
         'links_products_menu': links_products_menu,
         'title': 'Товары',
-        'hot_product': Product.objects.all().first(),
-        'same_products': Product.objects.all()[1:4],
-        'item_qty': items_qty,
-        'total': total
+        'hot_product': hot_product,
+        'same_products': get_same_products(hot_product),
+        'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/products.html', context)
 
@@ -64,6 +48,17 @@ def products(request, pk=None):
 def contact(request):
     with open(f'{settings.BASE_DIR}/contacts.json') as contacts_file:
         context = {
-            'contacts': json.load(contacts_file)
+            'contacts': json.load(contacts_file),
+            'basket': get_basket(request.user)
         }
     return render(request, 'mainapp/contact.html', context)
+
+
+def product(request, pk):
+    links_products_menu = ProductCategory.objects.all()
+    context = {
+        'product': get_object_or_404(Product, pk=pk),
+        'links_products_menu': links_products_menu,
+        'basket': get_basket(request.user)
+    }
+    return render(request, 'mainapp/product.html', context)
