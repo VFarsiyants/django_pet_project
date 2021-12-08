@@ -8,7 +8,7 @@ from services import get_basket, get_hot_product, get_same_products
 
 
 def index(request):
-    products_list = Product.objects.all()[:4]
+    products_list = Product.objects.all().filter(is_active=True)[:4]
     context = {
         'title': 'Мой магазин',
         'products': products_list,
@@ -18,16 +18,16 @@ def index(request):
 
 
 def products(request, pk=None):
-    links_products_menu = ProductCategory.objects.all()
+    links_products_menu = ProductCategory.objects.all().filter(is_active=True)
     hot_product = get_hot_product()
 
     if pk is not None:
         if pk == 0:
-            products_list = Product.objects.all()
+            products_list = Product.objects.all().filter(is_active=True)
             category_item = {'name': 'Все', 'pk': 0}
         else:
             category_item = get_object_or_404(ProductCategory, pk=pk)
-            products_list = Product.objects.filter(category__pk=pk)
+            products_list = Product.objects.filter(category__pk=pk).filter(is_active=True)
         context = {
             'links_products_menu': links_products_menu,
             'products': products_list,
@@ -55,7 +55,7 @@ def contact(request):
 
 
 def product(request, pk):
-    links_products_menu = ProductCategory.objects.all()
+    links_products_menu = ProductCategory.objects.all().filter(is_active=True)
     context = {
         'product': get_object_or_404(Product, pk=pk),
         'links_products_menu': links_products_menu,

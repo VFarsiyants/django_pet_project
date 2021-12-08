@@ -11,10 +11,10 @@ def get_basket(user):
 
 
 def get_hot_product():
-    product_list = Product.objects.all()
+    product_list = Product.objects.all().filter(is_active=True)
 
     return random.sample(list(product_list), 1)[0]
 
 
 def get_same_products(hot_product):
-    return Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+    return Product.objects.filter(category=hot_product.category, is_active=True).exclude(pk=hot_product.pk)[:3]

@@ -11,7 +11,7 @@
         <a class="btn btn-primary form-control" href="{% url 'index' %}">На главную</a>
     </form>
     <div class="user_avatar">
-        <img src="/media/{{ user.avatar }}">
+        <img src="/media/{{ user.avatar|default:'users/default.png' }}">
     </div>
 
 {% endblock %}

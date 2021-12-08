@@ -1,0 +1,24 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container" style="width: 1000px">
+
+        <div class="details-products">
+                <img src="/media/{{ product.image }}"
+                     alt="{{ product.short_desc }}" width="200px">
+
+                <div class="description">
+                    <h3 class="product_name">Наименование товара: {{ product.name | capfirst }}</h3>
+                    <p class="product_desc"> Категория: {{ product.category.name | title }}</p>
+                    <p class="product_cost"> Цена: {{ product.price|floatformat:2 }} <span>руб</span></p>
+                    Описание:
+                    <div class="product_desc">
+                        {{ product.description }}
+                    </div>
+                </div>
+
+        </div>
+        <a href="{% url 'adminapp:products' category.pk %}">К списку товаров категории "<span>{{ category.name | title }}</span>"</a>
+    </div>
+{% endblock %}
