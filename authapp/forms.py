@@ -31,13 +31,13 @@ class ShopUserRegisterForm(UserCreationForm):
             raise forms.ValidationError("Вы слишком маленький")
         return data_age
 
-    def clean_email(self):
-        data_email = self.cleaned_data['email']
-        registered_emails = [user.email for user in ShopUser.objects.all()]
-        for email in registered_emails:
-            if data_email == email:
-                raise forms.ValidationError("Пользователь с данным email уже существует")
-        return data_email
+    # def clean_email(self):
+    #     data_email = self.cleaned_data['email']
+    #     registered_emails = [user.email for user in ShopUser.objects.all()]
+    #     for email in registered_emails:
+    #         if data_email == email:
+    #             raise forms.ValidationError("Пользователь с данным email уже существует")
+    #     return data_email
 
 
 class ShopUserEditForm(UserChangeForm):

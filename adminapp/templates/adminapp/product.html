@@ -2,23 +2,48 @@
 {% load static %}
 
 {% block content %}
-    <div class="container" style="width: 1000px">
-
-        <div class="details-products">
-                <img src="/media/{{ product.image }}"
-                     alt="{{ product.short_desc }}" width="200px">
-
-                <div class="description">
-                    <h3 class="product_name">Наименование товара: {{ product.name | capfirst }}</h3>
-                    <p class="product_desc"> Категория: {{ product.category.name | title }}</p>
-                    <p class="product_cost"> Цена: {{ product.price|floatformat:2 }} <span>руб</span></p>
-                    Описание:
-                    <div class="product_desc">
-                        {{ product.description }}
-                    </div>
-                </div>
-
-        </div>
-        <a href="{% url 'adminapp:products' category.pk %}">К списку товаров категории "<span>{{ category.name | title }}</span>"</a>
+  <div class="product_read">
+    <div class="product_name">
+      Продукт<strong>{{ product.category.name|title }} /
+                     {{ product.name|title }}</strong>
     </div>
+    <img src="/media/{{ product.image|default:'products_images/default.jpg' }}"
+         alt="{{ product.name }}">
+    <div class="summary">
+      <b>цена</b>
+      <p>{{ product.price }} руб</p>
+      <b>количество</b>
+      <p>{{ product.quantity }}</p>
+      <b>в каталоге</b>
+      <p>{% if product.is_active %}да{% else %}нет{% endif %}</p>
+      <p>
+        <button>
+          <a href={% url 'adminapp:product_update' product.category.pk product.pk %}>
+            редактировать
+          </a>
+        </button>
+      </p>
+      <p>
+        <button>
+          <a href={% url 'adminapp:product_delete' product.category.pk product.pk %}>
+            удалить
+          </a>
+        </button>
+      </p>
+      <p>
+        <button>
+          <a href={% url 'adminapp:products' product.category.pk %}>
+            назад
+          </a>
+        </button>
+      </p>
+    </div>
+    <div class="product_desc">
+      <b>краткая информация</b>
+      <p>{{ product.short_desc }}</p>
+      <br><br>
+      <b>подробная информация</b>
+      <p>{{ product.description }}</p>
+    </div>
+  </div>
 {% endblock %}

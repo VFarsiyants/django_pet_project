@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load mainapp_tags %}
 {% block content %}
     <div class="hero-white">
         <div class="header clearfix">
@@ -13,21 +14,21 @@
         <div class="details-products">
             <div class="details-slider">
                 <div class="slider-product">
-                    <img src="/media/{{ hot_product.image }}" alt="" width = 100%>
+                    <img src="{{ hot_product.image|product_image }}" alt="" width = 100%>
                 </div>
                 <div class="slider-control">
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="border: solid gray 1px">
+                        <a href="#"><img src="{{ hot_product.image|product_image }}" alt="" style="border: solid gray 1px">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="border: solid gray 1px">
+                        <a href="#"><img src="{{ hot_product.image|product_image }}" alt="" style="border: solid gray 1px">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="" style="border: solid gray 1px">
+                        <a href="#"><img src="{{ hot_product.image|product_image }}" alt="" style="border: solid gray 1px">
                             <div class="text"></div>
                         </a>
                     </div>
@@ -56,7 +57,7 @@
                 {% for product in same_products %}
                     <div class="block">
                         <a href="{% url 'products:product' product.pk %}">
-                            <img src="/media/{{ product.image }}" alt="" width="100%">
+                            <img src="{{ product.image|product_image }}" alt="" width="100%">
                             <div class="text">
                                 <img src="{% static 'img/icon-hover.png' %}" alt="img">
                                 <h4>{{ product.name|capfirst }}</h4>

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-    <p>Вы уверены что хотите удалить продукт "{{ product.name }}"?</p>
+    <p>Вы уверены что хотите удалить продукт "{{ object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <input type="submit" value="Подтвердить" class="user_delete" style="width: 200px"><br>

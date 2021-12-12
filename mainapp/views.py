@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 import json
@@ -17,7 +18,7 @@ def index(request):
     return render(request, 'mainapp/index.html', context=context)
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     links_products_menu = ProductCategory.objects.all().filter(is_active=True)
     hot_product = get_hot_product()
 
@@ -28,9 +29,18 @@ def products(request, pk=None):
         else:
             category_item = get_object_or_404(ProductCategory, pk=pk)
             products_list = Product.objects.filter(category__pk=pk).filter(is_active=True)
+
+        paginator = Paginator(products_list, 2)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
+
         context = {
             'links_products_menu': links_products_menu,
-            'products': products_list,
+            'products': products_paginator,
             'category': category_item,
             'basket': get_basket(request.user)
         }
