@@ -1,13 +1,8 @@
 import random
-
-from basketapp.models import Basket
+from django.urls import reverse
+from django.conf import settings
 from mainapp.models import Product
-
-
-def get_basket(user):
-    if user.is_authenticated:
-        return Basket.objects.filter(user=user)
-    return []
+from django.core.mail import send_mail
 
 
 def get_hot_product():
@@ -18,3 +13,11 @@ def get_hot_product():
 
 def get_same_products(hot_product):
     return Product.objects.filter(category=hot_product.category, is_active=True).exclude(pk=hot_product.pk)[:3]
+
+
+def send_verify_mail(user):
+    verify_link = reverse('authapp:verify', args=[user.email, user.activation_key])
+    subject = 'Account verify'
+    message = f'{settings.BASE_URL}{verify_link}'
+
+    return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
