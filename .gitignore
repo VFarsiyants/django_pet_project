@@ -32,5 +32,6 @@ Temporary Items
 .apdisk
 __pycache__/
 .idea/
+env/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
