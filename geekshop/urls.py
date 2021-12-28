@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path, include, re_path
 from mainapp import views as mainapp
 
 urlpatterns = [
@@ -26,6 +26,7 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='authapp')),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='adminapp')),
+    re_path('', include("social_django.urls", namespace="social")),
 ]
 
 if settings.DEBUG:

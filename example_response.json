@@ -1,0 +1,62 @@
+{
+  "resourceName": "people/101401494389637726565",
+  "etag": "%EggBAgMHCC43PRoEAQIFBw==",
+  "names": [
+    {
+      "metadata": {
+        "primary": true,
+        "source": {
+          "type": "PROFILE",
+          "id": "101401494389637726565"
+        }
+      },
+      "displayName": "Владислав Фарсиянц",
+      "familyName": "Фарсиянц",
+      "givenName": "Владислав",
+      "displayNameLastFirst": "Фарсиянц, Владислав",
+      "unstructuredName": "Владислав Фарсиянц"
+    }
+  ],
+  "photos": [
+    {
+      "metadata": {
+        "primary": true,
+        "source": {
+          "type": "PROFILE",
+          "id": "101401494389637726565"
+        }
+      },
+      "url": "https://lh3.googleusercontent.com/a/AATXAJwFsrJhA5VPiyPoFKBZURbRgqG9Iyuqbs8fRiSV=s100",
+      "default": true
+    }
+  ],
+  "genders": [
+    {
+      "metadata": {
+        "primary": true,
+        "source": {
+          "type": "PROFILE",
+          "id": "101401494389637726565"
+        }
+      },
+      "value": "male",
+      "formattedValue": "Male"
+    }
+  ],
+  "birthdays": [
+    {
+      "metadata": {
+        "primary": true,
+        "source": {
+          "type": "PROFILE",
+          "id": "101401494389637726565"
+        }
+      },
+      "date": {
+        "year": 1994,
+        "month": 9,
+        "day": 21
+      }
+    }
+  ]
+}
