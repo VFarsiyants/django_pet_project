@@ -2,18 +2,23 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 import json
+from django.views.generic import ListView
 
 from mainapp.models import Product, ProductCategory
 from services import get_hot_product, get_same_products
 
 
-def index(request):
-    products_list = Product.objects.all().filter(is_active=True)[:4]
-    context = {
-        'title': 'Мой магазин',
-        'products': products_list
-    }
-    return render(request, 'mainapp/index.html', context=context)
+class IndexView(ListView):
+    model = Product
+    template_name = 'mainapp/index.html'
+
+    def get_queryset(self):
+        return super(IndexView, self).get_queryset().filter(is_active=True)[:4]
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super(IndexView, self).get_context_data()
+        context_data['title'] = 'Мой магазин'
+        return context_data
 
 
 def products(request, pk=None, page=1):
@@ -51,18 +56,29 @@ def products(request, pk=None, page=1):
     return render(request, 'mainapp/products.html', context)
 
 
-def contact(request):
-    with open(f'{settings.BASE_DIR}/contacts.json') as contacts_file:
-        context = {
-            'contacts': json.load(contacts_file)
+class ContactsView(ListView):
+    template_name = 'mainapp/contact.html'
+
+    def get_queryset(self):
+        return
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        with open(f'{settings.BASE_DIR}/contacts.json') as contacts_file:
+            context_data = {
+                'contacts': json.load(contacts_file)
+            }
+        return context_data
+
+
+class ProductView(ListView):
+    template_name = 'mainapp/product.html'
+
+    def get_queryset(self):
+        return
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = {
+            'product': get_object_or_404(Product, pk=self.kwargs.get('pk')),
+            'links_products_menu': ProductCategory.objects.all().filter(is_active=True)
         }
-    return render(request, 'mainapp/contact.html', context)
-
-
-def product(request, pk):
-    links_products_menu = ProductCategory.objects.all().filter(is_active=True)
-    context = {
-        'product': get_object_or_404(Product, pk=pk),
-        'links_products_menu': links_products_menu
-    }
-    return render(request, 'mainapp/product.html', context)
+        return context_data

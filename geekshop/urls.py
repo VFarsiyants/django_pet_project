@@ -20,9 +20,9 @@ from django.urls import path, include, re_path
 from mainapp import views as mainapp
 
 urlpatterns = [
-    path('', mainapp.index, name='index'),
+    path('', mainapp.IndexView.as_view(), name='index'),
     path('products/', include('mainapp.urls', namespace='products')),
-    path('contact/', mainapp.contact, name='contact'),
+    path('contact/', mainapp.ContactsView.as_view(), name='contact'),
     path('auth/', include('authapp.urls', namespace='authapp')),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='adminapp')),
