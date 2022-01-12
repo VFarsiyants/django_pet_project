@@ -24,7 +24,7 @@
     <div class="clearfix">
     </div>
     <div class="tab-content">
-        {% for product in products %}
+        {% for product in object_list %}
         <div class="block">
             <a href="{% url 'basket:basket_add' product.pk %}"><img src="/media/{{ product.image }}" alt="" width="100%">
                 <div class="text">
