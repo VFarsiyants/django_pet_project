@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import json
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +23,7 @@ SECRET_KEY = 'django-insecure-1)!qyh=x0q0d6=5as%=1hso^tqy)$l+nc+ita1dr_t#l=1*7^l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -82,10 +81,18 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geekshop',
+        'USER': 'postgres'
     }
 }
 
@@ -112,12 +119,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
 )
 
-# getting key, secret from jsonfile
-with open('google_oauth_2.json', 'r', encoding='utf-8') as f:
-    GOOGLE_OAUTH_2 = json.load(f)
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = GOOGLE_OAUTH_2['web']['client_id']
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = GOOGLE_OAUTH_2['web']['client_secret']
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "235704697972-v05a28oehm7id9e5fc0hqdb8nn8s0qkk.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']

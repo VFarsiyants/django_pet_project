@@ -2,6 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos
 google_oauth_2.json
+db.sqlite3
 ### macOS ###
 # General
 .env
