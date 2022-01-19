@@ -12,7 +12,8 @@ def get_hot_product():
 
 
 def get_same_products(hot_product):
-    return Product.objects.filter(category=hot_product.category, is_active=True).exclude(pk=hot_product.pk)[:3]
+    return Product.objects.filter(category=hot_product.category, is_active=True).exclude(
+        pk=hot_product.pk).select_related()[:3]
 
 
 def send_verify_mail(user):
