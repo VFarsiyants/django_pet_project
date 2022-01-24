@@ -13,7 +13,7 @@ class IndexView(ListView):
     template_name = 'mainapp/index.html'
 
     def get_queryset(self):
-        return super(IndexView, self).get_queryset().filter(is_active=True)[:4]
+        return super(IndexView, self).get_queryset().filter(is_active=True).select_related()[:4]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super(IndexView, self).get_context_data()

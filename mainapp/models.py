@@ -39,3 +39,7 @@ class Product(models.Model):
         self.is_active = False
         self.save()
 
+    @classmethod
+    def get_items(cls):
+        pass
+
