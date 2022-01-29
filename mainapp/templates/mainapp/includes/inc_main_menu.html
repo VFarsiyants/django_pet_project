@@ -6,10 +6,9 @@
            class="{% if request.resolver_match.namespace == 'products' %}active{% endif %}">продукты</a></li>
     <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">контакты</a>
     </li>
-    <li>
         {% if user.is_authenticated %}
             {% if user.is_superuser %}
-                <li><a href="{% url 'adminapp:users' %}">Панель администратора</a></li>
+                <li><a href="{% url 'adminapp:users' %}">Админка</a></li>
             {% endif %}
             <li><a href="{% url 'authapp:edit' %}">
                 {% if user.first_name %}{{ user.first_name }}{% else %}Пользователь{% endif %}</a></li>

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import QuerySet
+from django.db.models import QuerySet, F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -63,6 +63,13 @@ class CategoryUpdateView(UpdateView):
     template_name = 'adminapp/categories_form.html'
     form_class = ProductCategoryForm
     success_url = reverse_lazy('adminapp:categories')
+
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.product_set.update(price=F('price') * (1 - discount/100))
+        return super().form_valid(form)
 
 
 class CategoryDeleteView(DeleteView):

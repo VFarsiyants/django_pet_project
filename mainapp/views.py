@@ -42,7 +42,7 @@ def get_products():
         if products is None:
             products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')
             cache.set(key, products)
-        return products
+        return products[1:5]
     else:
         return Product.objects.filter(is_active=True, category__is_active=True).select_related('category')
 
@@ -52,11 +52,11 @@ def get_product(pk):
         key = f'product_{pk}'
         product = cache.get(key)
         if product is None:
-            product = get_object_or_404(ProductCategory, pk=pk)
+            product = get_object_or_404(Product, pk=pk)
             cache.set(key, product)
         return product
     else:
-        return get_object_or_404(ProductCategory, pk=pk)
+        return get_object_or_404(Product, pk=pk)
 
 
 def get_products_in_category_ordered_by_price(pk):
