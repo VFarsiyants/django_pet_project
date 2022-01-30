@@ -20,7 +20,7 @@
                             <a href="{% url 'adminapp:category_delete' item.pk %}">Удалить</a>
                         </button>
                     </div>
-                    <div class="category_desc">{{ item.description|title }}</div>
+                    <div class="category_desc">{{ item.description|capfirst }}</div>
                 {% else %}
                     <div class="category_desc">Архивная категория (Удалена)</div>
                 {% endif %}
